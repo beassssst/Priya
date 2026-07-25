@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Me & My Girlfriend ❤️</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        /* Scrapbook paper background */
+        background: radial-gradient(
+          circle at top left,
+          #fff7ec,
+          #f8ecd8 40%,
+          #efe2c8
+        );
+        overflow-x: hidden;
+      }
+
+      /* Floating Hearts */
+      .hearts {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .heart {
+        position: absolute;
+        color: #ff6b81;
+        font-size: 24px;
+        animation: float 10s linear infinite;
+        opacity: 0.3;
+      }
+
+      @keyframes float {
+        from {
+          transform: translateY(100vh) rotate(0deg);
+        }
+        to {
+          transform: translateY(-12vh) rotate(360deg);
+        }
+      }
+
+      /* Heading */
+      .title {
+        font-family: "Caveat", cursive;
+        font-size: 72px;
+        color: #d6336c;
+        line-height: 1.1;
+      }
+
+      .section-title {
+        font-family: "Caveat", cursive;
+        font-size: 52px;
+        color: #d6336c;
+        line-height: 1.1;
+      }
+
+      .subtitle {
+        color: #555;
+        font-size: 22px;
+        padding: 0 20px;
+      }
+
+      /* Entry Animation */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Gallery */
+      .gallery {
+        display: grid;
+        /* Adjusted for better mobile scaling */
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 40px;
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* Polaroid */
+      .polaroid {
+        position: relative;
+        background: white;
+        padding: 15px 15px 65px;
+        border-radius: 5px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        animation: fadeUp 0.8s forwards;
+        opacity: 0;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      /* Random Rotation - Expanded for up to 10 items per section */
+      .polaroid:nth-child(1) {
+        transform: rotate(-3deg);
+        animation-delay: 0.2s;
+      }
+      .polaroid:nth-child(2) {
+        transform: rotate(4deg);
+        animation-delay: 0.4s;
+      }
+      .polaroid:nth-child(3) {
+        transform: rotate(-2deg);
+        animation-delay: 0.6s;
+      }
+      .polaroid:nth-child(4) {
+        transform: rotate(5deg);
+        animation-delay: 0.8s;
+      }
+      .polaroid:nth-child(5) {
+        transform: rotate(-4deg);
+        animation-delay: 1s;
+      }
+      .polaroid:nth-child(6) {
+        transform: rotate(3deg);
+        animation-delay: 1.2s;
+      }
+      .polaroid:nth-child(7) {
+        transform: rotate(-3deg);
+        animation-delay: 1.4s;
+      }
+      .polaroid:nth-child(8) {
+        transform: rotate(4deg);
+        animation-delay: 1.6s;
+      }
+      .polaroid:nth-child(9) {
+        transform: rotate(-5deg);
+        animation-delay: 1.8s;
+      }
+      .polaroid:nth-child(10) {
+        transform: rotate(2deg);
+        animation-delay: 2s;
+      }
+
+      /* Hover Effect */
+      .polaroid:hover {
+        transform: scale(1.03) rotate(0deg);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        z-index: 10;
+      }
+
+      /* Tape */
+      .tape {
+        width: 110px;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.45);
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-2deg);
+        backdrop-filter: blur(2px);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        z-index: 5;
+      }
+
+      /* Image */
+      .polaroid img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+        border-radius: 2px;
+      }
+
+      .caption {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 15px;
+        text-align: center;
+        font-family: "Caveat", cursive;
+        font-size: 28px;
+        color: #444;
+      }
+
+      /* --- NEW: Old Paper Letter Section --- */
+      .letter-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px 20px 60px;
+      }
+
+      .old-paper {
+        position: relative;
+        background: #fdf6e3; /* Vintage paper color */
+        max-width: 650px;
+        width: 100%;
+        padding: 50px 40px;
+        /* Slightly irregular border radius to look like natural paper */
+        border-radius: 2px 15px 4px 10px;
+        /* Outer shadow for the page, inner shadow for aging edges */
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1), inset 0 0 50px rgba(160, 130, 90, 0.15);
+        transform: rotate(-1.5deg);
+        animation: fadeUp 1s forwards;
+        opacity: 0;
+        animation-delay: 1.5s;
+      }
+
+      .letter-text {
+        font-family: 'Caveat', cursive;
+        font-size: 32px;
+        line-height: 1.4;
+        color: #3e2723; /* Dark brown ink-like color */
+        margin-bottom: 20px;
+      }
+
+      .letter-text:last-child {
+        margin-bottom: 0;
+      }
+      
+      .signature {
+        text-align: right;
+        margin-top: 30px;
+        font-size: 36px;
+        font-weight: bold;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 40px 20px 60px;
+        font-family: "Caveat", cursive;
+        font-size: 32px;
+        color: #d6336c;
+      }
+
+      /* Desktop & Tablet Enhancements */
+      @media (min-width: 768px) {
+        .gallery {
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: 60px;
+          padding: 60px;
+        }
+        .polaroid {
+          padding: 18px 18px 75px;
+        }
+        .tape {
+          width: 130px;
+          height: 35px;
+        }
+        .old-paper {
+          padding: 60px 70px;
+          transform: rotate(-2deg);
+        }
+        .letter-text {
+          font-size: 36px;
+        }
+      }
+
+      /* Mobile specific adjustments */
+      @media (max-width: 480px) {
+        .title {
+          font-size: 52px;
+        }
+        .section-title {
+          font-size: 36px;
+        }
+        .subtitle {
+          font-size: 18px;
+        }
+        .caption {
+          font-size: 24px;
+        }
+        .old-paper {
+          padding: 40px 25px;
+        }
+        .letter-text {
+          font-size: 28px;
+          line-height: 1.3;
+        }
+        .signature {
+          font-size: 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Decorative Hearts -->
+    <div class="hearts">
+      <div class="heart" style="left: 10%; animation-delay: 0s">❤</div>
+      <div class="heart" style="left: 30%; animation-delay: 2s">❤</div>
+      <div class="heart" style="left: 50%; animation-delay: 4s">❤</div>
+      <div class="heart" style="left: 70%; animation-delay: 1s">❤</div>
+      <div class="heart" style="left: 90%; animation-delay: 3s">❤</div>
+    </div>
+
+    <!-- Header -->
+    <header class="text-center pt-16 pb-8">
+      <h1 class="title">Me & My Girlfriend ❤️</h1>
+      <p class="subtitle mt-4">
+        Every page holds a memory, every picture tells our story.
+      </p>
+    </header>
+
+    <!-- Our Beginning Section -->
+    <section class="mb-16">
+      <h2 class="section-title text-center mt-12 mb-8">
+        Begninning of Something New ❤️
+      </h2>
+      <div class="gallery">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/1.jpg" alt="Our Beginning" />
+          <div class="caption">Cheeseeeee✌🏻</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/2.jpg" alt="Forever Us" />
+          <div class="caption">Is she looking at me ? 💕</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/3.jpg" alt="My Happiness" />
+          <div class="caption">Idhar aa main photo leti hu ✨</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/4.jpg" alt="Always Together" />
+          <div class="caption">Always Together 🌹</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photo Gallery Section -->
+    <section>
+      <h2 class="section-title text-center mt-12 mb-8">Endless Memories ✨</h2>
+      <div class="gallery">
+        <!-- Original 2 cards -->
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/5.jpg" alt="My Favorite Smile" />
+          <div class="caption">My Favorite Smile 😊</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/6.jpg" alt="Endless Love" />
+          <div class="caption">Shhhhhhh! She's Sleeping 🤫</div>
+        </div>
+
+        <!-- New 6 cards below -->
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/9.jpg" alt="Adventures" />
+          <div class="caption">Our Little Rickshaw Rides 🌍</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/12.jpg" alt="My Peace" />
+          <div class="caption">Our First Date 🌹</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/13.jpg" alt="Silly Faces" />
+          <div class="caption">Isn't she beautiful ? 😍</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/15.jpg" alt="Beautiful You" />
+          <div class="caption">Priyaaaaa aankh khol 😱</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/7.jpg" alt="Late Night" />
+          <div class="caption">Brown and White 🫶🏻</div>
+        </div>
+
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="Images/14.jpg" alt="Infinity" />
+          <div class="caption">Fit Check 👥</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Love Letter Section -->
+    <section class="mt-8 mb-16">
+      <h2 class="section-title text-center mb-12">A Note For You 💌</h2>
+      <div class="letter-container">
+        <div class="old-paper">
+          <div class="tape" style="top: -15px; transform: translateX(-50%) rotate(2deg);"></div>
+          
+          <p class="letter-text">To my cutie,</p>
+          
+          <p class="letter-text">Looking at all these pictures reminds me of how incredibly lucky I am to have you by my side. Every smile, every silly face, and every little moment with you is my favorite treasure.</p>
+          
+          <p class="letter-text">You are my safe place and my greatest adventure. Thank you for being you, and for loving me the way you do. I can't wait to fill countless more pages with our story.</p>
+          
+          <p class="letter-text signature">Forever Yours, <br> Your Rudruuu</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>Made with ❤️ for the love of my life.</footer>
+
+    <!-- Background Music (Autoplay enabled) -->
+    <audio id="bgMusic" autoplay loop preload="auto">
+      <source
+        src="Audio/Those_Eyes_-_New_West_(mp3.pm).mp3"
+        type="audio/mpeg"
+      />
+    </audio>
+
+    <!-- Script to ensure music plays even if browser blocks pure autoplay -->
+    <script>
+      const music = document.getElementById("bgMusic");
+
+      // Attempt to play music automatically when the page loads
+      window.addEventListener("load", () => {
+        let playPromise = music.play();
+
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            // Browser blocked autoplay (very common).
+            // Add an event listener to start music on the very first touch/click.
+            document.body.addEventListener(
+              "click",
+              function startMusic() {
+                music.play();
+                // Remove the listener after the music starts so it doesn't trigger again
+                document.body.removeEventListener("click", startMusic);
+              },
+              { once: true },
+            );
+
+            document.body.addEventListener(
+              "touchstart",
+              function startMusicTouch() {
+                music.play();
+                document.body.removeEventListener(
+                  "touchstart",
+                  startMusicTouch,
+                );
+              },
+              { once: true },
+            );
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
