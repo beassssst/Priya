@@ -15,293 +15,122 @@
     />
 
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
 
       body {
         font-family: "Poppins", sans-serif;
-        /* Scrapbook paper background */
-        background: radial-gradient(
-          circle at top left,
-          #fff7ec,
-          #f8ecd8 40%,
-          #efe2c8
-        );
+        background: radial-gradient(circle at top left, #fff7ec, #f8ecd8 40%, #efe2c8);
         overflow-x: hidden;
       }
 
-      /* Floating Hearts */
-      .hearts {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        overflow: hidden;
-        z-index: -1;
-      }
-
-      .heart {
-        position: absolute;
-        color: #ff6b81;
-        font-size: 24px;
-        animation: float 10s linear infinite;
-        opacity: 0.3;
-      }
-
-      @keyframes float {
-        from {
-          transform: translateY(100vh) rotate(0deg);
-        }
-        to {
-          transform: translateY(-12vh) rotate(360deg);
-        }
-      }
-
-      /* Heading */
-      .title {
-        font-family: "Caveat", cursive;
-        font-size: 72px;
-        color: #d6336c;
-        line-height: 1.1;
-      }
-
-      .section-title {
-        font-family: "Caveat", cursive;
-        font-size: 52px;
-        color: #d6336c;
-        line-height: 1.1;
-      }
-
-      .subtitle {
-        color: #555;
-        font-size: 22px;
-        padding: 0 20px;
-      }
-
-      /* Entry Animation */
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(50px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      /* Gallery */
-      .gallery {
-        display: grid;
-        /* Adjusted for better mobile scaling */
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 40px;
-        padding: 40px 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      /* Polaroid */
-      .polaroid {
-        position: relative;
-        background: white;
-        padding: 15px 15px 65px;
-        border-radius: 5px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        animation: fadeUp 0.8s forwards;
-        opacity: 0;
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
-      }
-
-      /* Random Rotation - Expanded for up to 10 items per section */
-      .polaroid:nth-child(1) {
-        transform: rotate(-3deg);
-        animation-delay: 0.2s;
-      }
-      .polaroid:nth-child(2) {
-        transform: rotate(4deg);
-        animation-delay: 0.4s;
-      }
-      .polaroid:nth-child(3) {
-        transform: rotate(-2deg);
-        animation-delay: 0.6s;
-      }
-      .polaroid:nth-child(4) {
-        transform: rotate(5deg);
-        animation-delay: 0.8s;
-      }
-      .polaroid:nth-child(5) {
-        transform: rotate(-4deg);
-        animation-delay: 1s;
-      }
-      .polaroid:nth-child(6) {
-        transform: rotate(3deg);
-        animation-delay: 1.2s;
-      }
-      .polaroid:nth-child(7) {
-        transform: rotate(-3deg);
-        animation-delay: 1.4s;
-      }
-      .polaroid:nth-child(8) {
-        transform: rotate(4deg);
-        animation-delay: 1.6s;
-      }
-      .polaroid:nth-child(9) {
-        transform: rotate(-5deg);
-        animation-delay: 1.8s;
-      }
-      .polaroid:nth-child(10) {
-        transform: rotate(2deg);
-        animation-delay: 2s;
-      }
-
-      /* Hover Effect */
-      .polaroid:hover {
-        transform: scale(1.03) rotate(0deg);
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-        z-index: 10;
-      }
-
-      /* Tape */
-      .tape {
-        width: 110px;
-        height: 30px;
-        background: rgba(255, 255, 255, 0.45);
-        position: absolute;
-        top: -12px;
-        left: 50%;
-        transform: translateX(-50%) rotate(-2deg);
-        backdrop-filter: blur(2px);
-        border: 1px solid rgba(255, 255, 255, 0.7);
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        z-index: 5;
-      }
-
-      /* Image */
-      .polaroid img {
-        width: 100%;
-        aspect-ratio: 4/3;
-        object-fit: cover;
-        border-radius: 2px;
-      }
-
-      .caption {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 15px;
-        text-align: center;
-        font-family: "Caveat", cursive;
-        font-size: 28px;
-        color: #444;
-      }
-
-      /* --- NEW: Old Paper Letter Section --- */
-      .letter-container {
-        display: flex;
-        justify-content: center;
-        padding: 20px 20px 60px;
-      }
-
-      .old-paper {
-        position: relative;
-        background: #fdf6e3; /* Vintage paper color */
-        max-width: 650px;
-        width: 100%;
-        padding: 50px 40px;
-        /* Slightly irregular border radius to look like natural paper */
-        border-radius: 2px 15px 4px 10px;
-        /* Outer shadow for the page, inner shadow for aging edges */
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1), inset 0 0 50px rgba(160, 130, 90, 0.15);
-        transform: rotate(-1.5deg);
-        animation: fadeUp 1s forwards;
-        opacity: 0;
-        animation-delay: 1.5s;
-      }
-
-      .letter-text {
-        font-family: 'Caveat', cursive;
-        font-size: 32px;
-        line-height: 1.4;
-        color: #3e2723; /* Dark brown ink-like color */
-        margin-bottom: 20px;
-      }
-
-      .letter-text:last-child {
-        margin-bottom: 0;
+      /* --- Cinematic Glow & Film Grain (Moved to Background) --- */
+      .film-glow {
+        position: fixed; inset: 0; pointer-events: none; z-index: 0;
+        background: radial-gradient(circle, rgba(255,160,50,0.08) 0%, rgba(150,50,0,0.12) 100%);
+        mix-blend-mode: color-burn;
       }
       
-      .signature {
-        text-align: right;
-        margin-top: 30px;
-        font-size: 36px;
-        font-weight: bold;
+      .film-grain {
+        position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.35;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       }
 
-      /* Footer */
-      footer {
-        text-align: center;
-        padding: 40px 20px 60px;
-        font-family: "Caveat", cursive;
-        font-size: 32px;
-        color: #d6336c;
+      /* Floating Hearts */
+      .hearts { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+      .heart { position: absolute; color: #ff6b81; font-size: 24px; animation: float 10s linear infinite; opacity: 0.3; }
+      @keyframes float {
+        from { transform: translateY(100vh) rotate(0deg); }
+        to { transform: translateY(-12vh) rotate(360deg); }
       }
 
-      /* Desktop & Tablet Enhancements */
+      /* Typography */
+      .title { font-family: "Caveat", cursive; font-size: 72px; color: #d6336c; line-height: 1.1; position: relative; z-index: 2; }
+      .section-title { font-family: "Caveat", cursive; font-size: 52px; color: #d6336c; line-height: 1.1; position: relative; z-index: 2; }
+      .subtitle { color: #555; font-size: 22px; padding: 0 20px; position: relative; z-index: 2; }
+
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(50px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Gallery & Polaroids */
+      .gallery {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 40px; padding: 40px 20px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;
+      }
+
+      .polaroid {
+        position: relative; background: white; padding: 15px 15px 65px;
+        border-radius: 5px; 
+        /* The glowing haze behind the cards */
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 0 30px rgba(214, 51, 108, 0.25), 0 0 50px rgba(255, 160, 50, 0.15);
+        animation: fadeUp 0.8s forwards; opacity: 0;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .polaroid:nth-child(1) { transform: rotate(-3deg); animation-delay: 0.1s; }
+      .polaroid:nth-child(2) { transform: rotate(4deg); animation-delay: 0.2s; }
+      .polaroid:nth-child(3) { transform: rotate(-2deg); animation-delay: 0.3s; }
+      .polaroid:nth-child(4) { transform: rotate(5deg); animation-delay: 0.4s; }
+      .polaroid:nth-child(5) { transform: rotate(-4deg); animation-delay: 0.5s; }
+      .polaroid:nth-child(6) { transform: rotate(3deg); animation-delay: 0.6s; }
+      .polaroid:nth-child(7) { transform: rotate(-3deg); animation-delay: 0.7s; }
+      .polaroid:nth-child(8) { transform: rotate(4deg); animation-delay: 0.8s; }
+      .polaroid:nth-child(9) { transform: rotate(-2deg); animation-delay: 0.9s; }
+      .polaroid:nth-child(10) { transform: rotate(5deg); animation-delay: 1.0s; }
+      .polaroid:nth-child(11) { transform: rotate(-4deg); animation-delay: 1.1s; }
+      .polaroid:nth-child(12) { transform: rotate(3deg); animation-delay: 1.2s; }
+
+      .polaroid:hover { 
+        transform: scale(1.03) rotate(0deg); 
+        /* Stronger haze on hover */
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 40px rgba(214, 51, 108, 0.35), 0 0 60px rgba(255, 160, 50, 0.25); 
+        z-index: 10; 
+      }
+
+      /* Tape & Stickers */
+      .tape {
+        width: 110px; height: 30px; background: rgba(255, 255, 255, 0.45);
+        position: absolute; top: -12px; left: 50%; transform: translateX(-50%) rotate(-2deg);
+        backdrop-filter: blur(2px); border: 1px solid rgba(255, 255, 255, 0.7);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); z-index: 5;
+      }
+
+      .sticker {
+        position: absolute; font-size: 38px; z-index: 6;
+        filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.25));
+        pointer-events: none;
+      }
+
+      .polaroid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 2px; }
+      .caption { position: absolute; left: 0; right: 0; bottom: 15px; text-align: center; font-family: "Caveat", cursive; font-size: 28px; color: #444; }
+
+      /* Buttons */
+      .note-button {
+        display: inline-block; font-family: "Caveat", cursive; font-size: 32px; color: white;
+        background-color: #d6336c; padding: 12px 40px; border-radius: 50px; text-decoration: none;
+        box-shadow: 0 10px 25px rgba(214, 51, 108, 0.4); transition: all 0.3s ease; position: relative; z-index: 10;
+      }
+      .note-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 35px rgba(214, 51, 108, 0.6); background-color: #c02a5e; }
+      footer { text-align: center; padding: 40px 20px 60px; font-family: "Caveat", cursive; font-size: 32px; color: #d6336c; position: relative; z-index: 2; }
+
       @media (min-width: 768px) {
-        .gallery {
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-          gap: 60px;
-          padding: 60px;
-        }
-        .polaroid {
-          padding: 18px 18px 75px;
-        }
-        .tape {
-          width: 130px;
-          height: 35px;
-        }
-        .old-paper {
-          padding: 60px 70px;
-          transform: rotate(-2deg);
-        }
-        .letter-text {
-          font-size: 36px;
-        }
+        .gallery { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 60px; padding: 60px; }
+        .polaroid { padding: 18px 18px 75px; }
+        .tape { width: 130px; height: 35px; }
+        .note-button { font-size: 36px; }
       }
-
-      /* Mobile specific adjustments */
       @media (max-width: 480px) {
-        .title {
-          font-size: 52px;
-        }
-        .section-title {
-          font-size: 36px;
-        }
-        .subtitle {
-          font-size: 18px;
-        }
-        .caption {
-          font-size: 24px;
-        }
-        .old-paper {
-          padding: 40px 25px;
-        }
-        .letter-text {
-          font-size: 28px;
-          line-height: 1.3;
-        }
-        .signature {
-          font-size: 32px;
-        }
+        .title { font-size: 52px; } .section-title { font-size: 36px; } .subtitle { font-size: 18px; }
+        .caption { font-size: 24px; } .note-button { font-size: 28px; padding: 10px 30px; }
       }
     </style>
   </head>
   <body>
+    <!-- Cinematic Layers -->
+    <div class="film-glow"></div>
+    <div class="film-grain"></div>
+
     <!-- Decorative Hearts -->
     <div class="hearts">
       <div class="heart" style="left: 10%; animation-delay: 0s">❤</div>
@@ -311,164 +140,115 @@
       <div class="heart" style="left: 90%; animation-delay: 3s">❤</div>
     </div>
 
-    <!-- Header -->
     <header class="text-center pt-16 pb-8">
       <h1 class="title">Me & My Girlfriend ❤️</h1>
-      <p class="subtitle mt-4">
-        Every page holds a memory, every picture tells our story.
-      </p>
+      <p class="subtitle mt-4">Every page holds a memory, every picture tells our story.</p>
     </header>
 
-    <!-- Our Beginning Section -->
     <section class="mb-16">
-      <h2 class="section-title text-center mt-12 mb-8">
-        Begninning of Something New ❤️
-      </h2>
+      <h2 class="section-title text-center mt-12 mb-8">Beginning of Something New ❤️</h2>
       <div class="gallery">
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="top: -15px; right: -15px; transform: rotate(15deg);">🌸</div>
           <img src="Images/1.jpg" alt="Our Beginning" />
           <div class="caption">Cheeseeeee✌🏻</div>
         </div>
-
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="bottom: 80px; left: -15px; transform: rotate(-10deg);">💖</div>
           <img src="Images/2.jpg" alt="Forever Us" />
           <div class="caption">Is she looking at me ? 💕</div>
         </div>
-
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="top: -15px; left: -10px; transform: rotate(-20deg);">✨</div>
           <img src="Images/3.jpg" alt="My Happiness" />
           <div class="caption">Idhar aa main photo leti hu ✨</div>
         </div>
-
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="bottom: 70px; right: -10px; transform: rotate(20deg);">🎀</div>
           <img src="Images/4.jpg" alt="Always Together" />
           <div class="caption">Always Together 🌹</div>
         </div>
       </div>
     </section>
 
-    <!-- Photo Gallery Section -->
     <section>
       <h2 class="section-title text-center mt-12 mb-8">Endless Memories ✨</h2>
       <div class="gallery">
-        <!-- Original 2 cards -->
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="top: -20px; left: -10px; transform: rotate(-15deg);">🦋</div>
           <img src="Images/5.jpg" alt="My Favorite Smile" />
           <div class="caption">My Favorite Smile 😊</div>
         </div>
-
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="bottom: 80px; right: -15px; transform: rotate(15deg);">🤫</div>
           <img src="Images/6.jpg" alt="Endless Love" />
           <div class="caption">Shhhhhhh! She's Sleeping 🤫</div>
         </div>
-
-        <!-- New 6 cards below -->
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="top: 40%; left: -20px; transform: rotate(-5deg);">🌍</div>
           <img src="Images/9.jpg" alt="Adventures" />
           <div class="caption">Our Little Rickshaw Rides 🌍</div>
         </div>
-
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="top: -15px; right: -10px; transform: rotate(12deg);">💌</div>
           <img src="Images/12.jpg" alt="My Peace" />
           <div class="caption">Our First Date 🌹</div>
         </div>
-
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="bottom: 75px; left: -15px; transform: rotate(-25deg);">🫶🏻</div>
           <img src="Images/13.jpg" alt="Silly Faces" />
           <div class="caption">Isn't she beautiful ? 😍</div>
         </div>
-
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="top: -10px; right: -20px; transform: rotate(5deg);">🌻</div>
           <img src="Images/15.jpg" alt="Beautiful You" />
-          <div class="caption">Priyaaaaa aankh khol 😱</div>
+          <div class="caption">Rudruuuu do the peace sign ✌🏻</div>
         </div>
-
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="bottom: 75px; right: -10px; transform: rotate(10deg);">🤍</div>
           <img src="Images/7.jpg" alt="Late Night" />
           <div class="caption">Brown and White 🫶🏻</div>
         </div>
-
         <div class="polaroid">
           <div class="tape"></div>
+          <div class="sticker" style="top: -20px; left: 0px; transform: rotate(-15deg);">👥</div>
           <img src="Images/14.jpg" alt="Infinity" />
           <div class="caption">Fit Check 👥</div>
         </div>
       </div>
     </section>
 
-    <!-- Love Letter Section -->
-    <section class="mt-8 mb-16">
-      <h2 class="section-title text-center mb-12">A Note For You 💌</h2>
-      <div class="letter-container">
-        <div class="old-paper">
-          <div class="tape" style="top: -15px; transform: translateX(-50%) rotate(2deg);"></div>
-          
-          <p class="letter-text">To my cutie,</p>
-          
-          <p class="letter-text">Looking at all these pictures reminds me of how incredibly lucky I am to have you by my side. Every smile, every silly face, and every little moment with you is my favorite treasure.</p>
-          
-          <p class="letter-text">You are my safe place and my greatest adventure. Thank you for being you, and for loving me the way you do. I can't wait to fill countless more pages with our story.</p>
-          
-          <p class="letter-text signature">Forever Yours, <br> Your Rudruuu</p>
-        </div>
-      </div>
+    <section class="mt-8 mb-16 text-center">
+      <a href="note.html" class="note-button">Press me for a note 💌</a>
     </section>
 
-    <!-- Footer -->
     <footer>Made with ❤️ for the love of my life.</footer>
 
-    <!-- Background Music (Autoplay enabled) -->
     <audio id="bgMusic" autoplay loop preload="auto">
-      <source
-        src="Audio/Those_Eyes_-_New_West_(mp3.pm).mp3"
-        type="audio/mpeg"
-      />
+      <source src="Audio/Those_Eyes_-_New_West_(mp3.pm).mp3" type="audio/mpeg" />
     </audio>
 
-    <!-- Script to ensure music plays even if browser blocks pure autoplay -->
     <script>
       const music = document.getElementById("bgMusic");
-
-      // Attempt to play music automatically when the page loads
       window.addEventListener("load", () => {
         let playPromise = music.play();
-
         if (playPromise !== undefined) {
           playPromise.catch((error) => {
-            // Browser blocked autoplay (very common).
-            // Add an event listener to start music on the very first touch/click.
-            document.body.addEventListener(
-              "click",
-              function startMusic() {
-                music.play();
-                // Remove the listener after the music starts so it doesn't trigger again
-                document.body.removeEventListener("click", startMusic);
-              },
-              { once: true },
-            );
-
-            document.body.addEventListener(
-              "touchstart",
-              function startMusicTouch() {
-                music.play();
-                document.body.removeEventListener(
-                  "touchstart",
-                  startMusicTouch,
-                );
-              },
-              { once: true },
-            );
+            document.body.addEventListener("click", function startMusic() {
+              music.play();
+              document.body.removeEventListener("click", startMusic);
+            }, { once: true });
           });
         }
       });
