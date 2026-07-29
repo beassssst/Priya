@@ -15,23 +15,76 @@
     />
 
     <style>
+      /* --- CSS Variables for Light & Dark Mode --- */
+      :root {
+        /* Light Mode Colors - Soft Blush & Warm Whites */
+        --bg-gradient: linear-gradient(135deg, #fff0f5, #ffe4e1, #fff5f8, #f8ecd8);
+        --text-title: #d6336c;
+        --text-subtitle: #666;
+        --text-caption: #444;
+        --card-bg: #ffffff;
+        --tape-bg: rgba(255, 255, 255, 0.45);
+        --tape-border: rgba(255, 255, 255, 0.7);
+        --film-glow-1: rgba(255, 160, 50, 0.08);
+        --film-glow-2: rgba(214, 51, 108, 0.12);
+        --film-blend: color-burn;
+        --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.08), 0 0 30px rgba(214, 51, 108, 0.15), 0 0 50px rgba(255, 160, 50, 0.1);
+        --card-shadow-hover: 0 25px 50px rgba(0, 0, 0, 0.15), 0 0 40px rgba(214, 51, 108, 0.25), 0 0 60px rgba(255, 160, 50, 0.2);
+        --btn-bg: #d6336c;
+        --btn-hover: #c02a5e;
+        --lily-color: rgba(214, 51, 108, 0.12); /* Soft pink silhouette */
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          /* Dark Mode Colors - Deep Burgundy & Midnight */
+          --bg-gradient: linear-gradient(135deg, #1a0b12, #2d111d, #1f0d16, #14050a);
+          --text-title: #ff8fa3;
+          --text-subtitle: #ffccd5;
+          --text-caption: #f8e5e8;
+          --card-bg: #2a1620;
+          --tape-bg: rgba(255, 255, 255, 0.15);
+          --tape-border: rgba(255, 255, 255, 0.25);
+          --film-glow-1: rgba(255, 143, 163, 0.15);
+          --film-glow-2: rgba(200, 30, 80, 0.15);
+          --film-blend: screen;
+          --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 143, 163, 0.1), 0 0 50px rgba(200, 30, 80, 0.08);
+          --card-shadow-hover: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 143, 163, 0.25), 0 0 60px rgba(200, 30, 80, 0.2);
+          --btn-bg: #ff8fa3;
+          --btn-hover: #ff708a;
+          --lily-color: rgba(255, 143, 163, 0.15); /* Soft glowing pink */
+        }
+      }
+
       * { margin: 0; padding: 0; box-sizing: border-box; }
 
       body {
         font-family: "Poppins", sans-serif;
-        background: radial-gradient(circle at top left, #fff7ec, #f8ecd8 40%, #efe2c8);
+        background: var(--bg-gradient);
+        background-size: 300% 300%;
+        animation: gradientMove 15s ease infinite;
         overflow-x: hidden;
+        color: var(--text-caption);
+        transition: background 0.5s ease, color 0.5s ease;
       }
 
-      /* --- Cinematic Glow & Film Grain (Moved to Background) --- */
+      /* Animated Premium Background */
+      @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      /* --- Cinematic Glow & Film Grain --- */
       .film-glow {
         position: fixed; inset: 0; pointer-events: none; z-index: 0;
-        background: radial-gradient(circle, rgba(255,160,50,0.08) 0%, rgba(150,50,0,0.12) 100%);
-        mix-blend-mode: color-burn;
+        background: radial-gradient(circle, var(--film-glow-1) 0%, var(--film-glow-2) 100%);
+        mix-blend-mode: var(--film-blend);
+        transition: background 0.5s ease;
       }
       
       .film-grain {
-        position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.35;
+        position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.25;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       }
 
@@ -43,10 +96,50 @@
         to { transform: translateY(-12vh) rotate(360deg); }
       }
 
+      /* Background Lilies */
+      .lilies { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+      .lily {
+        position: absolute;
+        background-color: var(--lily-color);
+        /* SVG Mask technique ensures color perfectly adapts to Light/Dark Mode variables */
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12,22 C12,22 13,16 21,13 C21,13 18,10 14,12 C14,12 18,5 12,2 C6,5 10,12 10,12 C6,10 3,13 3,13 C11,16 12,22 12,22 Z'/%3E%3C/svg%3E");
+        -webkit-mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12,22 C12,22 13,16 21,13 C21,13 18,10 14,12 C14,12 18,5 12,2 C6,5 10,12 10,12 C6,10 3,13 3,13 C11,16 12,22 12,22 Z'/%3E%3C/svg%3E");
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        animation: swayLily 12s ease-in-out infinite alternate;
+        transition: background-color 0.5s ease;
+      }
+
+      @keyframes swayLily {
+        0% { transform: translateY(0) rotate(0deg) scale(1); }
+        50% { transform: translateY(-25px) rotate(8deg) scale(1.05); }
+        100% { transform: translateY(10px) rotate(-8deg) scale(0.95); }
+      }
+
       /* Typography */
-      .title { font-family: "Caveat", cursive; font-size: 72px; color: #d6336c; line-height: 1.1; position: relative; z-index: 2; }
-      .section-title { font-family: "Caveat", cursive; font-size: 52px; color: #d6336c; line-height: 1.1; position: relative; z-index: 2; }
-      .subtitle { color: #555; font-size: 22px; padding: 0 20px; position: relative; z-index: 2; }
+      .title, .section-title { 
+        font-family: "Caveat", cursive; 
+        color: var(--text-title); 
+        line-height: 1.1; 
+        position: relative; 
+        z-index: 2; 
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+        transition: color 0.5s ease;
+      }
+      .title { font-size: 72px; }
+      .section-title { font-size: 52px; }
+      .subtitle { 
+        color: var(--text-subtitle); 
+        font-size: 22px; 
+        padding: 0 20px; 
+        position: relative; 
+        z-index: 2; 
+        transition: color 0.5s ease;
+      }
 
       @keyframes fadeUp {
         from { opacity: 0; transform: translateY(50px); }
@@ -60,12 +153,13 @@
       }
 
       .polaroid {
-        position: relative; background: white; padding: 15px 15px 65px;
+        position: relative; 
+        background: var(--card-bg); 
+        padding: 15px 15px 65px;
         border-radius: 5px; 
-        /* The glowing haze behind the cards */
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 0 30px rgba(214, 51, 108, 0.25), 0 0 50px rgba(255, 160, 50, 0.15);
+        box-shadow: var(--card-shadow);
         animation: fadeUp 0.8s forwards; opacity: 0;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
       }
 
       /* Initial rotation and animation delays */
@@ -81,7 +175,6 @@
       .polaroid:nth-child(10) { transform: rotate(5deg); animation-delay: 1.0s; }
       .polaroid:nth-child(11) { transform: rotate(-4deg); animation-delay: 1.1s; }
       .polaroid:nth-child(12) { transform: rotate(3deg); animation-delay: 1.2s; }
-      /* Extended styles for the new cards added in the section */
       .polaroid:nth-child(13) { transform: rotate(-3deg); animation-delay: 1.3s; }
       .polaroid:nth-child(14) { transform: rotate(4deg); animation-delay: 1.4s; }
       .polaroid:nth-child(15) { transform: rotate(-2deg); animation-delay: 1.5s; }
@@ -96,17 +189,20 @@
 
       .polaroid:hover { 
         transform: scale(1.03) rotate(0deg); 
-        /* Stronger haze on hover */
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 40px rgba(214, 51, 108, 0.35), 0 0 60px rgba(255, 160, 50, 0.25); 
+        box-shadow: var(--card-shadow-hover); 
         z-index: 10; 
       }
 
       /* Tape & Stickers */
       .tape {
-        width: 110px; height: 30px; background: rgba(255, 255, 255, 0.45);
+        width: 110px; height: 30px; 
+        background: var(--tape-bg);
         position: absolute; top: -12px; left: 50%; transform: translateX(-50%) rotate(-2deg);
-        backdrop-filter: blur(2px); border: 1px solid rgba(255, 255, 255, 0.7);
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); z-index: 5;
+        backdrop-filter: blur(4px); 
+        border: 1px solid var(--tape-border);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+        z-index: 5;
+        transition: background 0.5s ease, border 0.5s ease;
       }
 
       .sticker {
@@ -116,16 +212,36 @@
       }
 
       .polaroid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 2px; }
-      .caption { position: absolute; left: 0; right: 0; bottom: 15px; text-align: center; font-family: "Caveat", cursive; font-size: 28px; color: #444; }
+      
+      .caption { 
+        position: absolute; left: 0; right: 0; bottom: 15px; 
+        text-align: center; font-family: "Caveat", cursive; 
+        font-size: 28px; 
+        color: var(--text-caption); 
+        transition: color 0.5s ease;
+      }
 
       /* Buttons */
       .note-button {
-        display: inline-block; font-family: "Caveat", cursive; font-size: 32px; color: white;
-        background-color: #d6336c; padding: 12px 40px; border-radius: 50px; text-decoration: none;
-        box-shadow: 0 10px 25px rgba(214, 51, 108, 0.4); transition: all 0.3s ease; position: relative; z-index: 10;
+        display: inline-block; font-family: "Caveat", cursive; font-size: 32px; 
+        color: white !important;
+        background-color: var(--btn-bg); padding: 12px 40px; border-radius: 50px; text-decoration: none;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
+        transition: all 0.3s ease; position: relative; z-index: 10;
       }
-      .note-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 35px rgba(214, 51, 108, 0.6); background-color: #c02a5e; }
-      footer { text-align: center; padding: 40px 20px 60px; font-family: "Caveat", cursive; font-size: 32px; color: #d6336c; position: relative; z-index: 2; }
+      .note-button:hover { 
+        transform: translateY(-5px) scale(1.05); 
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); 
+        background-color: var(--btn-hover); 
+      }
+      
+      footer { 
+        text-align: center; padding: 40px 20px 60px; 
+        font-family: "Caveat", cursive; font-size: 32px; 
+        color: var(--text-title); 
+        position: relative; z-index: 2; 
+        transition: color 0.5s ease;
+      }
 
       @media (min-width: 768px) {
         .gallery { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 60px; padding: 60px; }
@@ -151,6 +267,16 @@
       <div class="heart" style="left: 50%; animation-delay: 4s">❤</div>
       <div class="heart" style="left: 70%; animation-delay: 1s">❤</div>
       <div class="heart" style="left: 90%; animation-delay: 3s">❤</div>
+    </div>
+
+    <!-- Background Lilies -->
+    <div class="lilies">
+      <div class="lily" style="width: 140px; height: 140px; top: 8%; left: -2%; animation-delay: 0s;"></div>
+      <div class="lily" style="width: 220px; height: 220px; top: 65%; left: 85%; animation-delay: -3s;"></div>
+      <div class="lily" style="width: 100px; height: 100px; top: 35%; left: 88%; animation-delay: -7s;"></div>
+      <div class="lily" style="width: 180px; height: 180px; top: 82%; left: 5%; animation-delay: -2s;"></div>
+      <div class="lily" style="width: 130px; height: 130px; top: 22%; left: 75%; animation-delay: -9s;"></div>
+      <div class="lily" style="width: 250px; height: 250px; top: 45%; left: -5%; animation-delay: -12s;"></div>
     </div>
 
     <header class="text-center pt-16 pb-8">
